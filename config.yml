@@ -1,0 +1,33 @@
+# Single source of truth for the SOCKS5 stack.
+# Edit this file, then run: ./ctl.sh up
+# (ctl.sh renders generated/* from this config and recreates containers.)
+
+# Absolute path to the SSH private key used by all tunnel hosts.
+ssh_private_key: /Users/xhua/.ssh/socks5_ed25519
+
+# Host port for the public SOCKS5 entrypoint (sing-box).
+listen_port: 1081
+
+# SSH tunnel backends. Alias is always <user>-<port>.
+hosts:
+  - user: xhua
+    hostname: example.com
+    port: 3814
+  - user: xhua
+    hostname: example2.com
+    port: 2468
+
+# Domain policy for traffic entering listen_port.
+domain:
+  # false: send all traffic through the SSH tunnels (no domain filter).
+  # true:  apply allow list below.
+  enabled: true
+
+  # What to do with destinations outside `allow` when enabled is true:
+  #   block  - reject (default deny)
+  #   direct - bypass tunnels and use the container's normal internet
+  default: block
+
+  # Matched as domain suffix (example.com also matches a.example.com).
+  allow:
+    - google.com
