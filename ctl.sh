@@ -3,7 +3,7 @@
 set -eu
 cd "$(dirname "$0")"
 
-PROJECT=sh-jp-socks5
+PROJECT=socks-gate
 COMPOSE_FILE=generated/compose.yml
 
 usage() {
@@ -60,6 +60,14 @@ case "$cmd" in
   down)
     need_compose
     compose down --remove-orphans "$@"
+    # container_name is fixed; leftovers from other compose projects survive
+    # project-scoped down. Remove by name prefix so containers are gone.
+    leftover=$(docker ps -aq --filter "name=socks-gate" 2>/dev/null || true)
+    if [ -n "$leftover" ]; then
+      # Word-split intentional: docker IDs separated by whitespace.
+      # shellcheck disable=SC2086
+      docker rm -f $leftover
+    fi
     ;;
   restart)
     python3 ./generate.py

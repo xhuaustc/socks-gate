@@ -30,9 +30,9 @@ client
 | --- | --- | --- |
 | `socks5` | `ghcr.io/sagernet/sing-box:v1.11.15` | Public SOCKS5 entry and domain routing |
 | `socks5-lb` | `haproxy:2.9-alpine` | Pool health and round-robin |
-| `socks5-<alias>` | `sh-jp-socks5:local` | SSH dynamic forward on container port 1080 |
+| `socks5-<alias>` | `socks-gate:local` | SSH dynamic forward on container port 1080 |
 
-HAProxy marks a backend down after failed SOCKS5 checks and drops sessions on that server. Compose project name is `sh-jp-socks5`.
+HAProxy marks a backend down after failed SOCKS5 checks and drops sessions on that server. Compose project name is `socks-gate`.
 
 ## Prerequisites
 

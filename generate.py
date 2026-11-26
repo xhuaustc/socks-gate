@@ -206,7 +206,7 @@ def write_compose(cfg: dict) -> None:
         tunnel_services.append(
             f"""  socks5-{alias}:
     <<: *socks5-ssh
-    container_name: sh-jp-socks5-{alias}
+    container_name: socks-gate-{alias}
     command: ["{alias}"]
 """
         )
@@ -219,7 +219,7 @@ def write_compose(cfg: dict) -> None:
 
 x-socks5-ssh: &socks5-ssh
   build: ..
-  image: sh-jp-socks5:local
+  image: socks-gate:local
   restart: unless-stopped
   volumes:
     - {key}:/run/ssh/id_ed25519:ro
@@ -239,7 +239,7 @@ x-socks5-ssh: &socks5-ssh
 services:
 {''.join(tunnel_services)}  socks5-lb:
     image: haproxy:2.9-alpine
-    container_name: sh-jp-socks5-lb
+    container_name: socks-gate-lb
     restart: unless-stopped
     expose:
       - "1080"
@@ -261,7 +261,7 @@ services:
 
   socks5:
     image: ghcr.io/sagernet/sing-box:v1.11.15
-    container_name: sh-jp-socks5
+    container_name: socks-gate
     restart: unless-stopped
     ports:
       - "{listen_port}:1080"
