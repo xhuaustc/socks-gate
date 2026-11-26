@@ -7,7 +7,7 @@
 ssh_private_key: /Users/xhua/.ssh/socks5_ed25519
 
 # Host port for the public SOCKS5 entrypoint (sing-box).
-listen_port: 1081
+listen_port: 1080
 
 # SSH tunnel backends. Alias is always <user>-<port>.
 hosts:
