@@ -21,7 +21,10 @@ HEADER = "# GENERATED from config.yml by generate.py — do not edit by hand.\n"
 
 def load_config() -> dict:
     if not CONFIG_PATH.is_file():
-        raise SystemExit(f"missing config: {CONFIG_PATH}")
+        raise SystemExit(
+            f"missing config: {CONFIG_PATH}\n"
+            f"  copy the template first: cp config.example.yml config.yml"
+        )
     data = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8")) or {}
     validate(data)
     return data

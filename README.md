@@ -1,11 +1,22 @@
 # socks-gate
 
-Local SOCKS5 gateway. One public SOCKS5 port load-balances across SSH dynamic tunnels (`ssh -D`). Edit `config.yml`, then run `./ctl.sh up`.
+Local SOCKS5 gateway. One public SOCKS5 port load-balances across SSH dynamic tunnels (`ssh -D`).
+
+## Quick start
+
+```sh
+cp config.example.yml config.yml
+# edit config.yml: ssh_private_key, hosts, domain allow list, listen_port
+./ctl.sh up
+```
+
+`config.yml` is required at runtime and is gitignored. Do not commit your local copy.
 
 ## Layout
 
 ```
-config.yml              source of truth
+config.example.yml      template; copy to config.yml before first use
+config.yml              local source of truth (create this yourself)
 generate.py             renders generated/*
 ctl.sh                  render + docker compose lifecycle
 Dockerfile              Alpine image with openssh-client
@@ -41,6 +52,12 @@ HAProxy marks a backend down after failed SOCKS5 checks and drops sessions on th
 - An SSH private key that can log in to every host in `config.yml` (BatchMode, no password prompt)
 
 ## Configure
+
+Copy the example, then edit `config.yml`:
+
+```sh
+cp config.example.yml config.yml
+```
 
 `config.yml` fields:
 

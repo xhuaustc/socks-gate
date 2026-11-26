@@ -1,6 +1,7 @@
-# Single source of truth for the SOCKS5 stack.
-# Edit this file, then run: ./ctl.sh up
-# (ctl.sh renders generated/* from this config and recreates containers.)
+# Example config for the SOCKS5 stack.
+# Copy to config.yml, edit values, then run: ./ctl.sh up
+#   cp config.example.yml config.yml
+# (ctl.sh renders generated/* from config.yml and recreates containers.)
 
 # Absolute path to the SSH private key used by all tunnel hosts.
 ssh_private_key: /Users/xhua/.ssh/socks5_ed25519
